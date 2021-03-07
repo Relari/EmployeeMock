@@ -1,0 +1,10 @@
+server:
+  port: 8106
+
+application:
+  api:
+    path: '/application/mock/v1/employees'
+
+logging:
+  level:
+    com.pe.relari.employeemock: TRACE
