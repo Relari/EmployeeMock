@@ -32,7 +32,8 @@
         <div class="form-group">
             <label class="form-label">Gender:</label>
             <select class="form-control" th:field="*{sex}">
-                <option th:each="g : ${genders}" th:value="${g.code}" th:text="${g.description}" />
+                <option value="M">Male</option>
+                <option value="F">Female</option>
             </select>
         </div>
 
