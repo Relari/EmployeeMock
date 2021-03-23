@@ -2,8 +2,9 @@ server:
   port: 8106
 
 application:
-  api:
-    path: '/application/mock/v1/employees'
+  http-client:
+    employee:
+      base-url: https://employee-firebase.herokuapp.com/
 
 logging:
   level:

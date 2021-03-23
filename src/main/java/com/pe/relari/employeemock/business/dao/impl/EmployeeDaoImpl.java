@@ -6,12 +6,12 @@ import com.pe.relari.employeemock.business.exception.ErrorCategory;
 import com.pe.relari.employeemock.business.exception.ExceptionFactory;
 import com.pe.relari.employeemock.business.model.domain.Employee;
 import com.pe.relari.employeemock.business.model.entity.EmployeeEntity;
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -22,9 +22,18 @@ class EmployeeDaoImpl implements EmployeeDao {
   private final EmployeeRepository employeeRepository;
 
   @Override
-  public void save(Employee employee) {
-    log.debug("Saving the employee.");
-    employeeRepository.save(mapEmployeeEntity(employee));
+  public void save(Employee employee) throws IOException {
+
+    log.debug("Registering the employee.");
+    EmployeeEntity employeeEntity = mapEmployeeEntity(employee);
+
+    log.trace(employeeEntity.toString());
+    boolean response = employeeRepository.save(employeeEntity)
+            .execute()
+            .isSuccessful();
+
+    if (response) { log.info("Registered Employee. [{}]", true); }
+
   }
 
   private EmployeeEntity mapEmployeeEntity(Employee employee) {
@@ -38,22 +47,20 @@ class EmployeeDaoImpl implements EmployeeDao {
   }
 
   @Override
-  public List<Employee> findAll() {
+  public List<Employee> findAll() throws IOException {
 
     log.debug("List all employees.");
 
-    return employeeRepository.findAll().stream()
+    return Objects.requireNonNull(employeeRepository.findAll().execute().body()).stream()
             .map(this::mapEmployee)
             .peek(employee -> log.trace(employee.toString()))
             .collect(Collectors.toList());
   }
 
   @Override
-  public Employee findById(Integer id) {
+  public Employee findById(String id) {
 
-    log.debug("Search for the employee with the id"
-            .concat(StringUtils.SPACE)
-            .concat(id.toString()));
+    log.debug("Search for the employee with the id = [{}]", id);
 
     return employeeRepository.findById(id)
             .map(this::mapEmployee)
@@ -67,9 +74,7 @@ class EmployeeDaoImpl implements EmployeeDao {
   @Override
   public List<Employee> findByStatus(Boolean status) {
 
-    log.debug("Search for the employee with the status"
-            .concat(StringUtils.SPACE)
-            .concat(status.toString()));
+    log.debug("Search for the employee with the status = [{}]", status);
 
     return employeeRepository.findByStatus(status).stream()
             .map(this::mapEmployee)
@@ -80,9 +85,7 @@ class EmployeeDaoImpl implements EmployeeDao {
   @Override
   public List<Employee> findBySex(String sex) {
 
-    log.debug("Search for the employee with the sex"
-            .concat(StringUtils.SPACE)
-            .concat(sex));
+    log.debug("Search for the employee with the sex = [{}]", sex);
 
     return employeeRepository.findBySex(sex).stream()
             .map(this::mapEmployee)
