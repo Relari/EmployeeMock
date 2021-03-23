@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<retrofit.version>2.9.0</retrofit.version>
 	</properties>
 
 	<dependencies>
@@ -46,6 +47,34 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.11</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit -->
+		<dependency>
+			<groupId>com.squareup.retrofit2</groupId>
+			<artifactId>retrofit</artifactId>
+			<version>${retrofit.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson -->
+		<dependency>
+			<groupId>com.squareup.retrofit2</groupId>
+			<artifactId>converter-gson</artifactId>
+			<version>${retrofit.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/adapter-rxjava -->
+		<dependency>
+			<groupId>com.squareup.retrofit2</groupId>
+			<artifactId>adapter-rxjava2</artifactId>
+			<version>${retrofit.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/logging-interceptor -->
+		<dependency>
+			<groupId>com.squareup.okhttp3</groupId>
+			<artifactId>logging-interceptor</artifactId>
+			<version>4.4.1</version>
 		</dependency>
 
 		<dependency>
